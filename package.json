@@ -1,0 +1,15 @@
+{
+	"name": "Pm2Manager",
+	"version": "1.0.0",
+	"description": "a CLI to init PM2 config file for a whole folder",
+	"main": "index.js",
+	"repository": "https://github.com/zhuylanz/Pm2Manager",
+	"author": "Huy Lan",
+	"license": "MIT",
+	"bin": {
+		"pm2manager": "./index.js"
+	},
+	"dependencies": {
+		"yargs": "^17.7.2"
+	}
+}
