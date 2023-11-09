@@ -1,5 +1,5 @@
 {
-	"name": "Pm2Manager",
+	"name": "pm2manager",
 	"version": "1.0.0",
 	"description": "a CLI to init PM2 config file for a whole folder",
 	"main": "index.js",
