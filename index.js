@@ -10,10 +10,16 @@ yargs(hideBin(process.argv))
 		"init [path]",
 		"initialize PM2 config",
 		(yargs) => {
-			yargs.positional("path", {
-				describe: "path to generate config for",
-				default: "."
-			});
+			yargs
+				.positional("path", {
+					describe: "path to generate config for",
+					default: "."
+				})
+				.option("nvm", {
+					alias: "n",
+					type: "string",
+					describe: "Specify default node version"
+				});
 		},
 		(argv) => {
 			const pathArg = argv.path;
@@ -25,14 +31,14 @@ yargs(hideBin(process.argv))
 				console.error("Path does not exist:", pathArg);
 				process.exit(1);
 			}
-			generatePM2Config(pathArg);
+			generatePM2Config(pathArg, argv.nvm);
 		}
 	)
 	.demandCommand()
 	.strict()
 	.help().argv;
 
-function generatePM2Config(basePath) {
+function generatePM2Config(basePath, nvmVersion) {
 	const absoluteBasePath = path.resolve(basePath);
 	const apps = fs
 		.readdirSync(absoluteBasePath)
@@ -40,11 +46,15 @@ function generatePM2Config(basePath) {
 			return fs.statSync(path.join(absoluteBasePath, file)).isDirectory();
 		})
 		.map((dir) => {
-			return {
+			let app = {
 				name: dir,
 				cwd: path.join(absoluteBasePath, dir),
 				script: "./pm2.start.sh"
 			};
+			if (nvmVersion) {
+				app.exec_interpreter = `~/.nvm/versions/node/v${nvmVersion}/bin/node`;
+			}
+			return app;
 		});
 
 	const config = {
