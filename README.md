@@ -24,7 +24,13 @@ module.exports = {
 So the default script is `pm2.start.sh` and you will need to create that file in each of your app folder in order for it to work.
 
 ## Installation
+Using npm:
 
+```bash
+npm install -g pm2manager
+```
+
+Or, using yarn:
 ```bash
 yarn global add pm2manager
 ```
